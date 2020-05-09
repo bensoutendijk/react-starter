@@ -5,5 +5,9 @@
     align-items: center;
     .jumbotron {
         width: 300px;
+
+        @media (min-width: 576px) {
+            width: 500px;
+        }
     }
 }

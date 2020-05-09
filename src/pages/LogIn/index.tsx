@@ -9,6 +9,7 @@ function LogIn() {
   return (
     <div className="LogIn">
       <Jumbotron className="bg-dark text-light">
+        <h1>Log In</h1>
         <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>

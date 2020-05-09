@@ -7,8 +7,9 @@ import Button from 'react-bootstrap/Button';
 
 function SignUp() {
   return (
-    <div className="LogIn">
+    <div className="SignUp">
       <Jumbotron className="bg-dark text-light">
+        <h1>Sign Up</h1>
         <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
