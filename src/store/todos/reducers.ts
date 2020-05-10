@@ -52,8 +52,8 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Tod
         .addCase(receiveTodos, (state, action) => {
             state.fetching = false;
             state.fetched = true;
-            state.byId = mapToKey(action.payload, 'id');
-            state.allIds = getUniqueValues(action.payload, 'id');
+            state.byId = mapToKey(action.payload, '_id');
+            state.allIds = getUniqueValues(action.payload, '_id');
         });
     builder
         .addCase(rejectTodos, (state, action) => {

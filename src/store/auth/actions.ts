@@ -37,7 +37,7 @@ export const createUser = (
 export const fetchUser = () => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(getUserPending());
   try {
-      const { data } = await axios.get('/api/auth/local');
+      const { data } = await axios.get('/api/auth/local/current');
       dispatch(getUserSuccess(data));
   } catch (error) {
       dispatch(getUserFailed(error.message));
