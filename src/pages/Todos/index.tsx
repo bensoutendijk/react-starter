@@ -7,9 +7,8 @@ function TodoList() {
   return (
     <div className="TodoList">
       <Card className="bg-dark text-light">
-        <Card.Body>
-          <Card.Title>Foo Bar</Card.Title>
-          <Card.Text>Baz</Card.Text>
+        <Card.Body className="btn btn-dark card-new">
+          <i className="far fa-plus"></i>
         </Card.Body>
       </Card>
     </div>
