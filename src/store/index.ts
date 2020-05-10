@@ -3,8 +3,10 @@ import reduxLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 
 import todosReducer from './todos/reducers';
+import authReducer from './auth/reducers';
 
 const rootReducer = combineReducers({
+    auth: authReducer,
     todos: todosReducer,
 });
 
