@@ -3,25 +3,29 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import './Header.scss';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
     <header className="Header">
-      <Navbar 
-        className="Header-navbar" 
-        bg="dark" 
-        variant="dark" 
-        expand="lg"
-      >
-        <Navbar.Brand>React-Starter</Navbar.Brand>
+      <Navbar className="Header-navbar" bg="dark" variant="dark" expand="lg">
+        <Link to="/">
+          <Navbar.Brand>React-Starter</Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link>Todos</Nav.Link>
+            <Link to="/todos" className="nav-link">
+              Todos
+            </Link>
           </Nav>
           <Nav className="ml-auto">
-            <Nav.Link>Log In</Nav.Link>
-            <Button className="btn btn-primary">Create an Account</Button>
+            <Link to="/login" className="nav-link">
+              Log In
+            </Link>
+            <Link to="/signup" className="btn btn-primary">
+              Create an Account
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

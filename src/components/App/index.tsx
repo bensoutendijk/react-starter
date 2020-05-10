@@ -1,13 +1,22 @@
 import React from 'react';
-import './App.scss';
+import { Switch, Route } from 'react-router-dom';
 import Header from '../Header';
 import TodoList from '../Todos';
+
+import LogIn from '../LogIn';
+import SignUp from '../SignUp';
+
+import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <Header></Header>
-      <TodoList />
+      <Header />
+      <Switch>
+        <Route path="/todos" component={TodoList} />
+        <Route path="/login" component={LogIn} />
+        <Route path="/signup" component={SignUp} />
+      </Switch>
     </div>
   );
 }
