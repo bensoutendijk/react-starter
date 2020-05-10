@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.scss';
 import Header from '../Header';
-import SignUp from '../../pages/SignUp';
+import TodoList from '../../pages/Todos';
 
 function App() {
   return (
     <div className="App">
       <Header></Header>
-      <SignUp />
+      <TodoList />
     </div>
   );
 }
