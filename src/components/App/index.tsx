@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Header from '../Header';
-import TodoList from '../../pages/Todos';
+import TodoList from '../Todos';
 
 function App() {
   return (
