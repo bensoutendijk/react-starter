@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 
 import { RootState } from '../../store';
-import { fetchTodos } from '../../store/todos/actions';
+import { fetchTodos, createTodo, updateTodoForm } from '../../store/todos/actions';
+import { TodoStatus, TodoForm } from '../../store/todos/types';
 
 import './Todos.scss';
-import { TodoStatus } from '../../store/todos/types';
 import Col from 'react-bootstrap/Col';
+import FormControl from 'react-bootstrap/FormControl';
+import Form from 'react-bootstrap/Form';
 
 function TodoList() {
+  const [addTodo, setAddTodo] = useState(false);
   const todos = useSelector((state: RootState) => state.todos);
 
   const dispatch = useDispatch();
@@ -26,6 +27,28 @@ function TodoList() {
 
     getTodos();
   }, [dispatch]);
+
+  const handleAddTodo = function(event: React.FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    dispatch(createTodo(todos.form));
+
+    const todoForm: TodoForm = {
+      title: '',
+      description: '',
+      status: 0,
+    };
+
+    dispatch(updateTodoForm(todoForm));
+  };
+
+  const handleUpdateTodo = function(event: React.ChangeEvent<HTMLTextAreaElement>): void {
+    const todoForm: TodoForm = {
+      ...todos.form,
+      [event.target.name]: event.target.value,
+    };
+
+    dispatch(updateTodoForm(todoForm));
+  };
   
   return (
     <div className="TodoList">
@@ -49,19 +72,45 @@ function TodoList() {
                     </Col>
                   </Card.Body>
                 </Card>
-              )
+              );
             }
 
             return null;
           })}
-          <Card border="dark" className="TodoList-item bg-dark text-white">
-            <Card.Body className="p-0 d-flex justify-content-between">
-              <Button variant="dark" className="TodoList-add-item">
-                <i className="far fa-plus"></i>
-                <span className="ml-2">Add new item</span>
-              </Button>
-            </Card.Body>
-          </Card>
+          {addTodo ? (
+            <Card border="dark" className="TodoList-item bg-dark text-white">
+              <Card.Body className="p-0 d-flex justify-content-between">
+                <Form onSubmit={handleAddTodo} className="TodoList-new-form">
+                  <FormControl
+                    autoFocus
+                    as="textarea" 
+                    rows={3} 
+                    size="sm"
+                    name="title"
+                    value={todos.form.title}
+                    placeholder="Enter a title for this todo..."
+                    onChange={handleUpdateTodo}
+                  />
+                  <Button variant="primary" type="submit" className="mt-2">
+                    Save
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          ) : (
+            <Card border="dark" className="TodoList-item bg-dark text-white">
+              <Card.Body className="p-0 d-flex justify-content-between">
+                <Button 
+                  variant="dark" 
+                  className="TodoList-add-item"
+                  onClick={(): void => setAddTodo(true)}
+                >
+                  <i className="far fa-plus"></i>
+                  <span className="ml-2">Add new item</span>
+                </Button>
+              </Card.Body>
+            </Card>
+          )}
         </Card.Body>
       </Card>
     </div>
