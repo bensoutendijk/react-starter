@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../store/auth/actions';
 
 import Header from '../Header';
@@ -9,28 +9,38 @@ import LogIn from '../LogIn';
 import SignUp from '../SignUp';
 
 import './App.scss';
+import { RootState } from '../../store';
 
 function App() {
   const [ready, setReady] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-      const getAuth = async () => {
-          await dispatch(fetchUser());
-      };
+  const auth = useSelector((state: RootState) => state.auth);
 
-      getAuth().then(() => setReady(true));
+  useEffect(() => {
+    const getAuth = async () => {
+      await dispatch(fetchUser());
+    };
+
+    getAuth().then(() => setReady(true));
   }, [dispatch]);
 
   if (ready) {
     return (
       <div className="App">
         <Header />
-        <Switch>
-          <Route path="/todos" component={TodoList} />
-          <Route path="/login" component={LogIn} />
-          <Route path="/signup" component={SignUp} />
-        </Switch>
+        {auth.fetched ? (
+          <Switch>
+            <Route path="/todos" component={TodoList} />
+            <Redirect to="/todos" />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route exact path="/login" component={LogIn} />
+            <Route exact path="/signup" component={SignUp} />
+            <Redirect to="/login" />
+          </Switch>
+        )}
       </div>
     );
   }
