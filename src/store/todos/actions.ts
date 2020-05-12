@@ -69,15 +69,13 @@ export const fetchTodo = (
 };
 
 export const updateTodo = (
-  todoid: string,
-  todoDetails: Todo,
+  todo: Todo,
 ) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(putTodoPending());
   try {
-    if (!todoid) throw new Error('No todo ID provided');
-    if (!todoDetails) throw new Error('No form data provided');
-    await axios.put(`/api/todos/${todoid}`, todoDetails);
-    dispatch(putTodoSuccess(todoDetails));
+    if (!todo) throw new Error('No form data provided');
+    await axios.put(`/api/todos/${todo._id}`, todo);
+    dispatch(putTodoSuccess(todo));
   } catch (error) {
     dispatch(putTodoFailed(error.message));
   }

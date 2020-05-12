@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+import { Link, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl';
+import Form from 'react-bootstrap/Form';
 
 import { RootState } from '../../store';
 import { fetchTodos, createTodo, updateTodoForm } from '../../store/todos/actions';
 import { TodoStatus, TodoForm } from '../../store/todos/types';
 
 import './Todos.scss';
-import Col from 'react-bootstrap/Col';
-import FormControl from 'react-bootstrap/FormControl';
-import Form from 'react-bootstrap/Form';
+import TodoView from './View';
 
 function TodoList() {
   const [addTodo, setAddTodo] = useState(false);
@@ -61,16 +61,11 @@ function TodoList() {
             if (todo.status === TodoStatus.Todo) {
               return (
                 <Card className="TodoList-item bg-dark text-white">
-                  <Card.Body className="p-2 row">
-                    <Col xs="9">
-                      <p>{todo.title}</p>
-                    </Col>
-                    <Col xs="3">
-                      <Button variant="dark">
-                        <i className="far fa-pencil"></i>
-                      </Button>
-                    </Col>
-                  </Card.Body>
+                  <Link to={`/todos/${todo._id}`} className="btn btn-dark text-left">
+                    <Card.Body className="p-2">
+                      <Card.Text>{todo.title}</Card.Text>
+                    </Card.Body>
+                  </Link>
                 </Card>
               );
             }
@@ -113,6 +108,7 @@ function TodoList() {
           )}
         </Card.Body>
       </Card>
+      <Route path="/todos/:todoid" component={TodoView} />
     </div>
   );
 }
