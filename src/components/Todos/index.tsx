@@ -41,7 +41,7 @@ function TodoList() {
     dispatch(updateTodoForm(todoForm));
   };
 
-  const handleUpdateTodo = function(event: React.ChangeEvent<HTMLTextAreaElement>): void {
+  const handleChange = function(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     const todoForm: TodoForm = {
       ...todos.form,
       [event.target.name]: event.target.value,
@@ -82,7 +82,7 @@ function TodoList() {
                     name="title"
                     value={todos.form.title}
                     placeholder="Enter a title for this todo..."
-                    onChange={handleUpdateTodo}
+                    onChange={handleChange}
                   />
                   <Button variant="primary" type="submit" className="mt-2">
                     Save

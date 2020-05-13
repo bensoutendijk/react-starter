@@ -21,9 +21,9 @@ export const getTodoPending = createAction('GET_TODO_PENDING');
 export const getTodoSuccess = createAction<Todo>('GET_TODO_SUCCESS');
 export const getTodoFailed = createAction<TodosError>('GET_TODO_FAILED');
 
-export const putTodoPending = createAction('PUT_TODO_PENDING');
-export const putTodoSuccess = createAction<Todo>('PUT_TODO_SUCCESS');
-export const putTodoFailed = createAction<TodosError>('PUT_TODO_FAILED');
+export const postTodoPending = createAction('POST_TODO_PENDING');
+export const postTodoSuccess = createAction<Todo>('POST_TODO_SUCCESS');
+export const postTodoFailed = createAction<TodosError>('POST_TODO_FAILED');
 
 export const removeTodoPending = createAction('REMOVE_TODO_PENDING');
 export const removeTodoSuccess = createAction<string>('REMOVE_TODO_SUCCESS');
@@ -71,13 +71,13 @@ export const fetchTodo = (
 export const updateTodo = (
   todo: Todo,
 ) => async (dispatch: AppDispatch): Promise<void> => {
-  dispatch(putTodoPending());
+  dispatch(postTodoPending());
   try {
     if (!todo) throw new Error('No form data provided');
-    await axios.put(`/api/todos/${todo._id}`, todo);
-    dispatch(putTodoSuccess(todo));
+    await axios.post(`/api/todos/${todo._id}`, todo);
+    dispatch(postTodoSuccess(todo));
   } catch (error) {
-    dispatch(putTodoFailed(error.message));
+    dispatch(postTodoFailed(error.message));
   }
 };
 

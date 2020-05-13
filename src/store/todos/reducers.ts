@@ -11,9 +11,9 @@ import {
   getTodoPending, 
   getTodoSuccess, 
   getTodoFailed, 
-  putTodoPending, 
-  putTodoSuccess, 
-  putTodoFailed, 
+  postTodoPending, 
+  postTodoSuccess, 
+  postTodoFailed, 
   removeTodoPending, 
   removeTodoSuccess, 
   removeTodoFailed,
@@ -83,18 +83,18 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Tod
       state.error = action.payload;
     });
   builder
-    .addCase(putTodoPending, (state) => {
+    .addCase(postTodoPending, (state) => {
       state.fetching = true;
     });
   builder
-    .addCase(putTodoSuccess, (state, action) => {
+    .addCase(postTodoSuccess, (state, action) => {
       state.fetching = false;
       state.fetched = true;
       state.byId[action.payload._id] = action.payload;
       state.selected = action.payload._id;
     });
   builder
-    .addCase(putTodoFailed, (state, action) => {
+    .addCase(postTodoFailed, (state, action) => {
       state.fetched = false;
       state.error = action.payload;
     });
