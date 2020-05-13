@@ -64,6 +64,13 @@ function TodoList() {
                   <Link to={`/todos/${todo._id}`} className="btn btn-dark text-left">
                     <Card.Body className="p-2">
                       <Card.Text>{todo.title}</Card.Text>
+                      {todo.description ? (
+                        <Card.Body className="p-0">
+                          <i className="far fa-align-left"></i>
+                        </Card.Body>
+                      ) : (
+                        null
+                      )}
                     </Card.Body>
                   </Link>
                 </Card>
