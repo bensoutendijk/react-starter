@@ -18,12 +18,10 @@ function TodoView() {
   const history = useHistory();
 
   useEffect(() => {
-    const selectTodo = async function() {
-      await dispatch(updateTodoForm(todo));
-    };
-
-    selectTodo();
-  }, [dispatch]);
+    if (todo) {
+      dispatch(updateTodoForm(todo));
+    }
+  }, [dispatch, todo]);
 
   const handleChange = function(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     const todoForm: TodoForm = {
@@ -50,10 +48,8 @@ function TodoView() {
     history.push('/todos');
   };
 
-  if (typeof todo === 'undefined') {
-    return (
-      <Redirect to='/todos' />
-    );
+  if (!todos.fetched) {
+    return null;
   }
 
   return (
@@ -69,6 +65,7 @@ function TodoView() {
           <Modal.Title>
             <Form.Control 
               name="title"
+              size="lg"
               value={todos.form.title}
               onChange={handleChange} 
             />
