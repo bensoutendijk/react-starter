@@ -75,7 +75,9 @@ function TodoView() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Control 
+          <Form.Control
+            as="textarea"
+            rows={5} 
             name="description"
             value={todos.form.description} 
             onChange={handleChange} 
