@@ -78,9 +78,7 @@ function TodoList() {
                 <Form onSubmit={handleAddTodo} className="TodoList-new-form">
                   <FormControl
                     autoFocus
-                    as="textarea" 
-                    rows={3} 
-                    size="sm"
+                    autoComplete="off"
                     name="title"
                     value={todos.form.title}
                     placeholder="Enter a title for this todo..."
