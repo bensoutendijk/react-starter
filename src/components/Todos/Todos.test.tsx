@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import TodoList from '.';
+import Todos from '.';
 
 test('app', () => {
-  const element = render(<TodoList />);
+  const element = render(<Todos />);
   expect(element)
 });

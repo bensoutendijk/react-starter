@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../store/auth/actions';
 
 import Header from '../Header';
-import TodoList from '../Todos';
+import Todos from '../Todos';
 import LogIn from '../LogIn';
 import SignUp from '../SignUp';
 
@@ -31,7 +31,7 @@ function App() {
         <Header />
         {auth.fetched ? (
           <Switch>
-            <Route path="/todos" component={TodoList} />
+            <Route path="/todos" component={Todos} />
             <Redirect to="/todos" />
           </Switch>
         ) : (
