@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { updateBoard, updateBoardForm } from '../../store/boards/actions';
+import { updateBoard, updateBoardForm, fetchBoard } from '../../store/boards/actions';
 import { BoardForm } from '../../store/boards/types';
 import Button from 'react-bootstrap/Button';
 
@@ -22,18 +22,12 @@ function BoardView() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (typeof board === 'undefined') {
-      return;
-    }
-
-    const boardForm: BoardForm = {
-      _id: board._id,
-      title: board.title,
+    const getBoard = function() {
+      dispatch(fetchBoard(params.boardid));
     };
 
-    dispatch(updateBoardForm(boardForm));
-
-  }, [dispatch, board]);
+    getBoard();
+  }, [dispatch, params.boardid]);
 
   const handleChange = function(event: React.ChangeEvent<HTMLInputElement>): void {
     if (typeof board === 'undefined') {
