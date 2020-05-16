@@ -1,4 +1,5 @@
 import { Category } from "../categories/types";
+import { Card } from "../cards/types";
 
 export type BoardsState = {
   fetched: boolean;
@@ -25,13 +26,14 @@ export interface Board {
     id: string; 
     scopes: string[];
   }[];
-  categories: string[] | Category[];
+  categories: string[];
   cards: string[];
   archived: boolean;
 }
 
-export interface BoardComplete extends Board {
+export interface BoardComplete extends Omit<Board, 'categories' | 'cards'> {
   categories: Category[];
+  cards: Card[];
 }
 
 export type BoardForm = Pick<Board, '_id' | 'title' >;

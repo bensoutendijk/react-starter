@@ -10,6 +10,7 @@ import {
 } from './types';
 import { AppDispatch } from '..';
 import { receiveCategories } from '../categories/actions';
+import { receiveCards } from '../cards/actions';
 
 export const createBoardPending = createAction('CREATE_BOARD_PENDING');
 export const createBoardSuccess = createAction<Board>('CREATE_BOARD_SUCCESS');
@@ -20,7 +21,7 @@ export const receiveBoards = createAction<Board[]>('RECEIVE_BOARDS');
 export const rejectBoards = createAction<BoardsError>('REJECT_BOARDS');
 
 export const getBoardPending = createAction('GET_BOARD_PENDING');
-export const getBoardSuccess = createAction<Board>('GET_BOARD_SUCCESS');
+export const getBoardSuccess = createAction<BoardComplete>('GET_BOARD_SUCCESS');
 export const getBoardFailed = createAction<BoardsError>('GET_BOARD_FAILED');
 
 export const postBoardPending = createAction('POST_BOARD_PENDING');
@@ -64,8 +65,9 @@ export const fetchBoard = (
   try {
     if (!boardid) throw new Error('No board ID provided');
     const { data } = await axios.get<BoardComplete>(`/api/boards/${boardid}`);
-    dispatch(receiveCategories(data.categories));
     dispatch(getBoardSuccess(data));
+    dispatch(receiveCategories(data.categories));
+    dispatch(receiveCards(data.cards));
   } catch (error) {
     dispatch(getBoardFailed(error.message));
   }

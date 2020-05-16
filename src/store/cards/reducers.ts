@@ -1,25 +1,25 @@
 import { createReducer, ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { mapToKey, getUniqueValues } from '../../utils';
-import { BoardsState } from './types';
+import { CardsState } from './types';
 import { 
-  createBoardPending, 
-  createBoardSuccess, 
-  createBoardFailed, 
-  receiveBoards, 
-  rejectBoards, 
-  getBoardPending, 
-  getBoardSuccess, 
-  getBoardFailed, 
-  postBoardPending, 
-  postBoardSuccess, 
-  postBoardFailed, 
-  removeBoardPending, 
-  removeBoardSuccess, 
-  removeBoardFailed,
-  updateBoardForm,
+  createCardPending, 
+  createCardSuccess, 
+  createCardFailed, 
+  postCardPending, 
+  postCardSuccess, 
+  postCardFailed, 
+  removeCardPending, 
+  removeCardSuccess, 
+  removeCardFailed,
+  updateCardForm,
+  receiveCards,
+  rejectCards,
+  getCardPending,
+  getCardSuccess,
+  getCardFailed,
 } from './actions';
+import { mapToKey, getUniqueValues } from '../../utils';
 
-const initialState: BoardsState = {
+const initialState: CardsState = {
   fetched: false,
   fetching: false,
   error: '',
@@ -28,84 +28,85 @@ const initialState: BoardsState = {
   form: {},
 };
 
-export default createReducer(initialState, (builder: ActionReducerMapBuilder<BoardsState>) => {
+export default createReducer(initialState, (builder: ActionReducerMapBuilder<CardsState>) => {
   builder
-    .addCase(createBoardPending, (state) => {
+    .addCase(createCardPending, (state) => {
       state.fetching = true;
     });
   builder
-    .addCase(createBoardSuccess, (state, action) => {
+    .addCase(createCardSuccess, (state, action) => {
       state.fetching = false;
       state.fetched = true;
       state.byId[action.payload._id] = action.payload;
       state.allIds.push(action.payload._id);
     });
   builder
-    .addCase(createBoardFailed, (state, action) => {
+    .addCase(createCardFailed, (state, action) => {
       state.fetching = false;
       state.fetched = false;
       state.error = action.payload;
     });
   builder
-    .addCase(receiveBoards, (state, action) => {
+    .addCase(receiveCards, (state, action) => {
       state.fetching = false;
       state.fetched = true;
       state.byId = mapToKey(action.payload, '_id');
       state.allIds = getUniqueValues(action.payload, '_id');
     });
   builder
-    .addCase(rejectBoards, (state, action) => {
+    .addCase(rejectCards, (state, action) => {
       state.fetching = false;
       state.fetched = false;
       state.error = action.payload;
     });
   builder
-    .addCase(getBoardPending, (state) => {
+    .addCase(getCardPending, (state) => {
       state.fetching = true;
     });
   builder
-    .addCase(getBoardSuccess, (state, action) => {
+    .addCase(getCardSuccess, (state, action) => {
       state.fetching = false;
       state.fetched = true;
+      state.byId[action.payload._id] = action.payload;
       state.form[action.payload._id] = action.payload;
     });
   builder
-    .addCase(getBoardFailed, (state, action) => {
+    .addCase(getCardFailed, (state, action) => {
       state.fetching = false;
       state.fetched = false;
       state.error = action.payload;
     });
   builder
-    .addCase(postBoardPending, (state) => {
+    .addCase(postCardPending, (state) => {
       state.fetching = true;
     });
   builder
-    .addCase(postBoardSuccess, (state, action) => {
+    .addCase(postCardSuccess, (state, action) => {
       state.fetching = false;
       state.fetched = true;
       state.byId[action.payload._id] = action.payload;
     });
   builder
-    .addCase(postBoardFailed, (state, action) => {
+    .addCase(postCardFailed, (state, action) => {
       state.fetched = false;
       state.error = action.payload;
     });
   builder
-    .addCase(removeBoardPending, (state, action) => {
+    .addCase(removeCardPending, (state, action) => {
       state.fetching = true;
     });
   builder
-    .addCase(removeBoardSuccess, (state, action) => {
+    .addCase(removeCardSuccess, (state, action) => {
       state.fetching = false;
       state.allIds = state.allIds.filter((id) => id !== action.payload);
     });
   builder
-    .addCase(removeBoardFailed, (state, action) => {
+    .addCase(removeCardFailed, (state, action) => {
       state.fetching = false;
       state.error = action.payload;
     });
   builder
-    .addCase(updateBoardForm, (state, action) => {
+    .addCase(updateCardForm, (state, action) => {
       state.form[action.payload._id] = action.payload;
     });
 });
