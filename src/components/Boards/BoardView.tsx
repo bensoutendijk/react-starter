@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import clsx from 'clsx';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { updateBoard, updateBoardForm, fetchBoard } from '../../store/boards/actions';
-import { BoardForm } from '../../store/boards/types';
-import Button from 'react-bootstrap/Button';
+
+import Categories from '../Categories';
 
 function BoardView() {
   const params: { boardid: string } = useParams();
@@ -18,6 +19,8 @@ function BoardView() {
 
   const boards = useSelector((state: RootState) => state.boards);
   const board = boards.byId[params.boardid];
+  const cards = useSelector((state: RootState) => state.cards);
+
 
   const dispatch = useDispatch();
 
@@ -102,7 +105,8 @@ function BoardView() {
           />
         )}
       </Navbar>
-    </div>
+      <Categories />
+\    </div>
 
   );
 }
