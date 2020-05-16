@@ -6,8 +6,10 @@ import {
   Board,
   BoardsError,
   BoardForm,
+  BoardComplete,
 } from './types';
 import { AppDispatch } from '..';
+import { receiveCategories } from '../categories/actions';
 
 export const createBoardPending = createAction('CREATE_BOARD_PENDING');
 export const createBoardSuccess = createAction<Board>('CREATE_BOARD_SUCCESS');
@@ -61,7 +63,8 @@ export const fetchBoard = (
   dispatch(getBoardPending());
   try {
     if (!boardid) throw new Error('No board ID provided');
-    const { data } = await axios.get(`/api/boards/${boardid}`);
+    const { data } = await axios.get<BoardComplete>(`/api/boards/${boardid}`);
+    dispatch(receiveCategories(data.categories));
     dispatch(getBoardSuccess(data));
   } catch (error) {
     dispatch(getBoardFailed(error.message));

@@ -1,3 +1,5 @@
+import { Category } from "../categories/types";
+
 export type BoardsState = {
   fetched: boolean;
   fetching: boolean;
@@ -9,6 +11,7 @@ export type BoardsState = {
   form: Partial<{
     [key: string]: BoardForm;
   }>;
+  selected?: string;
 };
 
 export type BoardsError = string;
@@ -22,9 +25,13 @@ export interface Board {
     id: string; 
     scopes: string[];
   }[];
-  categories: string[];
+  categories: string[] | Category[];
   cards: string[];
   archived: boolean;
+}
+
+export interface BoardComplete extends Board {
+  categories: Category[];
 }
 
 export type BoardForm = Pick<Board, '_id' | 'title' >;

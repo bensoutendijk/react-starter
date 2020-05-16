@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createReducer, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { mapToKey, getUniqueValues } from '../../utils';
 import { BoardsState } from './types';
@@ -69,6 +68,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Boa
       state.fetching = false;
       state.fetched = true;
       state.byId[action.payload._id] = action.payload;
+      state.form[action.payload._id] = action.payload;
     });
   builder
     .addCase(getBoardFailed, (state, action) => {
