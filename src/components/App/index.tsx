@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../store/auth/actions';
 
 import Header from '../Header';
-import Todos from '../Todos';
+import Boards from '../Boards';
 import LogIn from '../LogIn';
 import SignUp from '../SignUp';
 
@@ -25,27 +25,28 @@ function App() {
     getAuth().then(() => setReady(true));
   }, [dispatch]);
 
-  if (ready) {
-    return (
-      <div className="App">
-        <Header />
-        {auth.fetched ? (
-          <Switch>
-            <Route path="/todos" component={Todos} />
-            <Redirect to="/todos" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/login" component={LogIn} />
-            <Route exact path="/signup" component={SignUp} />
-            <Redirect to="/login" />
-          </Switch>
-        )}
-      </div>
-    );
+  if (!ready) {
+    return null;
   }
 
-  return null;
+  return (
+    <div className="App">
+      <Header />
+      {auth.fetched ? (
+        <Switch>
+          <Route path="/boards" component={Boards} />
+          <Route path="/cards" component={Boards} />
+          <Redirect to="/boards" />
+        </Switch>
+      ) : (
+        <Switch>
+          <Route exact path="/login" component={LogIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <Redirect to="/login" />
+        </Switch>
+      )}
+    </div>
+  );
 }
 
 export default App;

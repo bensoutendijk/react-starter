@@ -2,17 +2,17 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import reduxLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 
-import todosReducer from './todos/reducers';
+import todosReducer from './boards/reducers';
 import authReducer from './auth/reducers';
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    todos: todosReducer,
+  auth: authReducer,
+  boards: todosReducer,
 });
 
 const store = configureStore({
-    reducer: rootReducer,
-    middleware: [reduxThunk, <any>reduxLogger],
+  reducer: rootReducer,
+  middleware: [reduxThunk, reduxLogger as any],
 });
 
 

@@ -4,5 +4,5 @@ import App from '.';
 
 test('app', () => {
   const appElement = render(<App />);
-  expect(appElement)
+  expect(appElement);
 });
