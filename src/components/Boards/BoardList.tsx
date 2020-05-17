@@ -19,7 +19,7 @@ function BoardList() {
         }
 
         return (
-          <Link to={`/boards/${board._id}`} className="BoardList-button btn btn-dark">
+          <Link key={board._id} to={`/boards/${board._id}`} className="BoardList-button btn btn-dark">
             <h6>{board.title}</h6>
           </Link>
         );
