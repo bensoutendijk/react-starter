@@ -6,10 +6,10 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import { useDispatch } from 'react-redux';
-import { createCategory } from '../../store/categories/actions';
+import { createCard } from '../../store/cards/actions';
 
-function CardNew() {
-  const [formOpen, setFormOpen] = useState(false);
+const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
+  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
 
   const { boardid } = useParams();
@@ -19,56 +19,64 @@ function CardNew() {
   const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const categoryForm = {
+    const cardForm = {
       _id: '*',
       title,
       boardid,
+      categoryid,
     };
 
-    dispatch(createCategory(categoryForm));
-    setFormOpen(false);
+    dispatch(createCard(cardForm));
+    setOpen(false);
   };
 
   return (
-    <div className="CategoryNew">
-      <Card bg={formOpen ? 'light' : undefined }>
-        {formOpen ? (
+    <div className="CardNew">
+      <Card bg={open ? 'light' : undefined }>
+        {open ? (
           <Card.Body>
             <Form onSubmit={handleSubmit}>
               <Form.Group>
                 <Form.Control 
                   autoFocus
-                  type="text" 
-                  placeholder="Enter category name..."
+                  as="textarea"
+                  rows={3}
+                  size="sm"
+                  style={{ resize: 'none' }}
+                  placeholder="Enter card title..."
                   name="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </Form.Group>
+              <Button
+                type="submit" 
+                variant="success"
+                children="Save"
+                size="sm"
+              />
+              <button 
+                type="button"
+                className="btn btn-sm"
+                children={<i className="fa far fa-times" />}
+                onClick={() => {setOpen(false);setTitle('');}}
+              />
             </Form>
-            <Button
-              type="submit" 
-              variant="success"
-              children="Save Category"
-              size="sm"
-            />
-            <button 
-              type="button"
-              className="btn btn-sm"
-              children={<i className="fa far fa-times" />}
-              onClick={() => setFormOpen(false)}
-            />
           </Card.Body>
         ) : (
           <button 
-            className="CategoryNew-btn btn" 
-            onClick={() => setFormOpen(true)}>
-            <i className="fa far fa-plus" />{' Add new category'}
+            className="CardNew-btn btn text-left" 
+            onClick={() => setOpen(true)}>
+            <i className="fa far fa-plus" />{' Add a card'}
           </button>
         )}
       </Card>
     </div>
   );
-}
+};
 
 export default CardNew;
+
+export interface CardNewProps {
+  categoryid: string;
+}

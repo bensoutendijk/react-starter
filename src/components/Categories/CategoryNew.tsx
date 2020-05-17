@@ -45,19 +45,19 @@ function CategoryNew() {
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </Form.Group>
+              <Button
+                type="submit" 
+                variant="success"
+                children="Save Category"
+                size="sm"
+              />
+              <button 
+                type="button"
+                className="btn btn-sm"
+                children={<i className="fa far fa-times" />}
+                onClick={() => setFormOpen(false)}
+              />
             </Form>
-            <Button
-              type="submit" 
-              variant="success"
-              children="Save Category"
-              size="sm"
-            />
-            <button 
-              type="button"
-              className="btn btn-sm"
-              children={<i className="fa far fa-times" />}
-              onClick={() => setFormOpen(false)}
-            />
           </Card.Body>
         ) : (
           <button 

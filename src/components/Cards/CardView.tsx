@@ -11,9 +11,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
     <div className="CardView">
       <Card className="CardView-card" bg="light">
         <Card.Body>
-          <h6>
-            {card?.title}
-          </h6>
+          {card?.title}
         </Card.Body>
       </Card>
       

@@ -16,6 +16,8 @@ export type CardsError = string;
 export interface Card {
   _id: string;
   title: string;
+  categoryid: string;
+  boardid: string;
   createdOn: Date;
   updatedOn: Date;
   archived: boolean;
