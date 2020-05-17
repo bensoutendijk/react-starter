@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
@@ -10,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { updateBoard, updateBoardForm, fetchBoard } from '../../store/boards/actions';
 
-import Categories from '../Categories';
+import CategoryList from '../Categories/CategoryList';
 
 function BoardView() {
   const params: { boardid: string } = useParams();
@@ -105,7 +104,7 @@ function BoardView() {
           />
         )}
       </Navbar>
-      <Categories />
+      <CategoryList />
 \    </div>
 
   );

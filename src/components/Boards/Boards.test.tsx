@@ -4,5 +4,5 @@ import Todos from '.';
 
 test('app', () => {
   const element = render(<Todos />);
-  expect(element)
+  expect(element);
 });

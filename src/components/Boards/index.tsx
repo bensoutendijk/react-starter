@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { fetchBoards } from '../../store/boards/actions';
 
 import './Boards.scss';
+import '../Categories/Categories.scss';
+import '../Cards/Cards.scss';
 import BoardList from './BoardList';
 import BoardView from './BoardView';
 import BoardNew from './BoardNew';
