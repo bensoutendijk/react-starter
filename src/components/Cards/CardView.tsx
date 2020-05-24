@@ -1,31 +1,69 @@
 import React, { useState } from 'react';
 
 import Card from 'react-bootstrap/Card';
-import Dropdown from 'react-bootstrap/Dropdown';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import Form from 'react-bootstrap/Form';
+import { updateCardForm, updateCard } from '../../store/cards/actions';
 
 const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
   const [open, setOpen] = useState(false);
-  const card = useSelector((state: RootState) => state.cards.byId[cardid]);
+  const cards = useSelector((state: RootState) => state.cards);
+  const card = cards.byId[cardid];
+  const cardForm = cards.form[cardid];
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const cardForm = cards.form[cardid];
+    if (typeof cardForm === 'undefined') {
+      return;
+    }
+
+    dispatch(updateCard(cardForm));
+    setOpen(false);
+  };
+
+  const handleChange = function(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const cardForm = cards.form[cardid];
+    if (typeof cardForm === 'undefined') {
+      return;
+    }
+
+    dispatch(updateCardForm({ ...cardForm, [e.target.name]: e.target.value }));
+  };
+
+  const handleOpen = function() {
+    if (typeof card === 'undefined') {
+      return;
+    }
+
+    dispatch(updateCardForm(card));
+    setOpen(true);
+  };
+
   return (
     <div className="CardView">
       {open ? (
         <Card className="CardEdit-card">
-          <Form className="CardEdit-card-form">
+          <Form className="CardEdit-card-form" onSubmit={handleSubmit}>
             <Card.Body>
               <Form.Control 
                 autoFocus
                 as="textarea"
                 rows={4}
                 style={{ resize: 'none' }}
-                value={card?.title}
+                name="title"
+                value={cardForm?.title}
+                onChange={handleChange}
               />
             </Card.Body>
             <div className="mt-2">
               <button 
+                type="submit"
                 className="btn btn-success" 
                 children="Save"
               />
@@ -34,15 +72,15 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
           <div className="CardEdit-card-quicktools">
             <button 
               className="btn btn-dark" 
-              children="Delete"
+              children="Edit labels"
             />
             <button 
               className="btn btn-dark" 
-              children="Another action"
+              children="Copy"
             />
             <button 
               className="btn btn-dark" 
-              children="Disabled"
+              children="Archive"
             />
           </div>
         </Card>
@@ -58,7 +96,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
             <button 
               type="button" 
               className="CardEdit-btn btn btn-sm" 
-              onClick={() => setOpen(true)}
+              onClick={handleOpen}
               children={<i className="fa fal fa-pencil fa-sm" />}
             />
           </div>
