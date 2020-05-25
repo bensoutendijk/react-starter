@@ -28,6 +28,7 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
 
     dispatch(createCard(cardForm));
     setOpen(false);
+    setTitle('');
   };
 
   return (
