@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import Card from 'react-bootstrap/Card';
 
@@ -9,6 +9,7 @@ import { updateCardForm, updateCard } from '../../store/cards/actions';
 
 const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
   const [open, setOpen] = useState(false);
+  const cardRef = useRef(null);
   const cards = useSelector((state: RootState) => state.cards);
   const card = cards.byId[cardid];
   const cardForm = cards.form[cardid];
@@ -45,10 +46,33 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
     setOpen(true);
   };
 
+  useEffect(() => {
+    const clickHandler = function(e: MouseEvent) {
+      if (e.target === cardRef.current) {
+        setOpen(false);
+      }
+    }
+
+    const keypressHandler = function(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    }
+
+    if (open) {
+      document.addEventListener('click', clickHandler);
+      document.addEventListener('keydown', keypressHandler);
+      return () => {
+        document.removeEventListener('click', clickHandler);
+        document.removeEventListener('keydown', keypressHandler);
+      }
+    }
+  });
+
   return (
     <div className="CardView">
       {open ? (
-        <Card className="CardEdit-card">
+        <Card className="CardEdit-card" ref={cardRef}>
           <Form className="CardEdit-card-form" onSubmit={handleSubmit}>
             <Card.Body>
               <Form.Control 
