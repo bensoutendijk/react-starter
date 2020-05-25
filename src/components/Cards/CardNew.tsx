@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
@@ -15,6 +15,19 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
   const { boardid } = useParams();
 
   const dispatch = useDispatch();
+
+  const handleOpen = function(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    setOpen(true);
+  };
+
+  const handleClose = function(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    setTitle('');
+    setOpen(false);
+  };
 
   const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -60,14 +73,14 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
                 type="button"
                 className="btn btn-sm"
                 children={<i className="fa far fa-times" />}
-                onClick={() => {setOpen(false);setTitle('');}}
+                onClick={handleClose}
               />
             </Form>
           </Card.Body>
         ) : (
           <button 
             className="CardNew-btn btn text-left" 
-            onClick={() => setOpen(true)}>
+            onClick={handleOpen}>
             <i className="fa far fa-plus" />{' Add a card'}
           </button>
         )}
