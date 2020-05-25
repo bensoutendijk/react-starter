@@ -10,6 +10,7 @@ import { updateCardForm, updateCard, deleteCard } from '../../store/cards/action
 const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
   const [open, setOpen] = useState(false);
   const cardRef = useRef(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const cards = useSelector((state: RootState) => state.cards);
   const card = cards.byId[cardid];
   const cardForm = cards.form[cardid];
@@ -68,12 +69,16 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
     if (open) {
       document.addEventListener('click', clickHandler);
       document.addEventListener('keydown', keypressHandler);
+
+      if (inputRef.current !== null) {
+        inputRef.current.select();
+      }
       return () => {
         document.removeEventListener('click', clickHandler);
         document.removeEventListener('keydown', keypressHandler);
       };
     }
-  });
+  },[open]);
 
   return (
     <div className="CardView">
@@ -82,6 +87,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
           <Form className="CardEdit-card-form" onSubmit={handleSubmit}>
             <Card.Body>
               <Form.Control 
+                ref={inputRef}
                 autoFocus
                 as="textarea"
                 rows={4}
