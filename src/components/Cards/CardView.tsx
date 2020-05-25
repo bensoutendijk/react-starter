@@ -17,9 +17,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  const submitForm = function() {
     const cardForm = cards.form[cardid];
     if (typeof cardForm === 'undefined') {
       return;
@@ -29,6 +27,11 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
     setOpen(false);
   };
 
+  const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    submitForm();
+  };
+
   const handleChange = function(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const cardForm = cards.form[cardid];
     if (typeof cardForm === 'undefined') {
@@ -36,6 +39,12 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
     }
 
     dispatch(updateCardForm({ ...cardForm, [e.target.name]: e.target.value }));
+  };
+
+  const handleKeyPress = function(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      submitForm();
+    }
   };
 
   const handleOpen = function() {
@@ -95,6 +104,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
                 name="title"
                 value={cardForm?.title}
                 onChange={handleChange}
+                onKeyPress={handleKeyPress}
               />
             </Card.Body>
             <div className="mt-2">

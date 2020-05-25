@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
@@ -29,9 +29,17 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
     setOpen(false);
   };
 
-  const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const handleChange = function(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setTitle(e.target.value);
+  };
 
+  const handleKeyPress = function(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      submitForm();
+    }
+  };
+
+  const submitForm = function() {
     const cardForm = {
       _id: '*',
       title,
@@ -42,6 +50,11 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
     dispatch(createCard(cardForm));
     setOpen(false);
     setTitle('');
+  };
+
+  const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    submitForm();
   };
 
   return (
@@ -60,7 +73,8 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
                   placeholder="Enter card title..."
                   name="title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={handleChange}
+                  onKeyPress={handleKeyPress}
                 />
               </Form.Group>
               <Button
