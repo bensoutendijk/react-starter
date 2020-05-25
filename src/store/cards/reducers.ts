@@ -99,6 +99,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Car
     .addCase(removeCardSuccess, (state, action) => {
       state.fetching = false;
       state.allIds = state.allIds.filter((id) => id !== action.payload);
+      state.byId[action.payload] = undefined;
     });
   builder
     .addCase(removeCardFailed, (state, action) => {

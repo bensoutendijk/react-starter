@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import Form from 'react-bootstrap/Form';
-import { updateCardForm, updateCard } from '../../store/cards/actions';
+import { updateCardForm, updateCard, deleteCard } from '../../store/cards/actions';
 
 const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
   const [open, setOpen] = useState(false);
@@ -46,18 +46,24 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
     setOpen(true);
   };
 
+  const handleDelete = function(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    dispatch(deleteCard(cardid));
+    setOpen(false);
+  };
+
   useEffect(() => {
     const clickHandler = function(e: MouseEvent) {
       if (e.target === cardRef.current) {
         setOpen(false);
       }
-    }
+    };
 
     const keypressHandler = function(e: KeyboardEvent) {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         setOpen(false);
       }
-    }
+    };
 
     if (open) {
       document.addEventListener('click', clickHandler);
@@ -65,7 +71,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
       return () => {
         document.removeEventListener('click', clickHandler);
         document.removeEventListener('keydown', keypressHandler);
-      }
+      };
     }
   });
 
@@ -105,6 +111,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
             <button 
               className="btn btn-dark" 
               children="Archive"
+              onClick={handleDelete}
             />
           </div>
         </Card>

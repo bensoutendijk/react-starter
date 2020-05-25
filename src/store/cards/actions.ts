@@ -75,8 +75,8 @@ export const deleteCard = (
 ) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(removeCardPending());
   try {
-    const { data } = await axios.delete(`/api/cards/${cardid}`);
-    dispatch(removeCardSuccess(data));
+    await axios.delete(`/api/cards/${cardid}`);
+    dispatch(removeCardSuccess(cardid));
   } catch (error) {
     const { data } = error.response;
     dispatch(removeCardFailed(data));
