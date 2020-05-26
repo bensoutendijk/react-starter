@@ -65,9 +65,20 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Boa
     });
   builder
     .addCase(getBoardSuccess, (state, action) => {
+      const board = state.byId[action.payload._id];
+      if (typeof board === 'undefined') {
+        throw new Error('Board not found');
+      }
+
+      const categories = action.payload.categories
+        .map((category) => category._id)
+        .sort((a, b) => board.categories.indexOf(a) - board.categories.indexOf(b));
       state.fetching = false;
       state.fetched = true;
-      state.form[action.payload._id] = action.payload;
+      state.form[action.payload._id] = {
+        ...action.payload,
+        categories,
+      };
     });
   builder
     .addCase(getBoardFailed, (state, action) => {

@@ -15,6 +15,7 @@ export type CategoriesError = string;
 
 export interface Category {
   _id: string;
+  boardid: string;
   title: string;
   createdOn: Date;
   updatedOn: Date;

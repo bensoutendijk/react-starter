@@ -36,4 +36,4 @@ export interface BoardComplete extends Omit<Board, 'categories' | 'cards'> {
   cards: Card[];
 }
 
-export type BoardForm = Pick<Board, '_id' | 'title' >;
+export type BoardForm = Pick<Board, '_id' | 'title' | 'categories' >;

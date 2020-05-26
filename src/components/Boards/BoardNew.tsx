@@ -26,6 +26,7 @@ function BoardNew() {
     const boardForm = {
       _id: '*',
       title,
+      categories: [],
     };
 
     dispatch(createBoard(boardForm));
