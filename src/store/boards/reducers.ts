@@ -85,6 +85,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Boa
       state.fetching = false;
       state.fetched = true;
       state.byId[action.payload._id] = action.payload;
+      state.form[action.payload._id] = action.payload;
     });
   builder
     .addCase(postBoardFailed, (state, action) => {

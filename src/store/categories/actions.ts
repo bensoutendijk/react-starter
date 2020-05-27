@@ -8,6 +8,7 @@ import {
   CategoryForm,
 } from './types';
 import { AppDispatch } from '..';
+import { postBoardPending, postBoardSuccess, postBoardFailed } from '../boards/actions';
 
 export const createCategoryPending = createAction('CREATE_CATEGORY_PENDING');
 export const createCategorySuccess = createAction<Category>('CREATE_CATEGORY_SUCCESS');
@@ -28,15 +29,18 @@ export const removeCategoryFailed = createAction<CategoriesError>('REMOVE_CATEGO
 export const updateCategoryForm = createAction<CategoryForm>('UPDATE_CATEGORY_FORM');
 
 export const createCategory = (
-  formData: CategoryForm,
+  formData: Omit<CategoryForm, '_id'>,
 ) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(createCategoryPending());
+  dispatch(postBoardPending());
   try {
     if (!formData) throw new Error('No form data prodived');
     const { data } = await axios.post('/api/categories', formData);
-    dispatch(createCategorySuccess(data));
+    dispatch(createCategorySuccess(data.category));
+    dispatch(postBoardSuccess(data.board));
   } catch (error) {
     dispatch(createCategoryFailed(error.message));
+    dispatch(postBoardFailed(error.message));
   }
 };
 

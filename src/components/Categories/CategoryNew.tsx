@@ -5,34 +5,38 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createCategory } from '../../store/categories/actions';
+import { RootState } from '../../store';
 
 function CategoryNew() {
-  const [formOpen, setFormOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
-
   const { boardid } = useParams();
-
+  const board = useSelector((state: RootState) => state.boards.byId[boardid]);
   const dispatch = useDispatch();
+  
+  if (typeof board === 'undefined') {
+    return null;
+  }
+
+  const categoryForm = {
+    boardid,
+    index: board.categories.length,
+    title,
+  };
 
   const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const categoryForm = {
-      _id: '*',
-      title,
-      boardid,
-    };
-
     dispatch(createCategory(categoryForm));
-    setFormOpen(false);
+    setOpen(false);
   };
 
   return (
     <div className="CategoryNew">
-      <Card bg={formOpen ? 'light' : undefined }>
-        {formOpen ? (
+      <Card bg={open ? 'light' : undefined }>
+        {open ? (
           <Card.Body>
             <Form onSubmit={handleSubmit}>
               <Form.Group>
@@ -55,14 +59,14 @@ function CategoryNew() {
                 type="button"
                 className="btn btn-sm"
                 children={<i className="fa far fa-times" />}
-                onClick={() => setFormOpen(false)}
+                onClick={() => setOpen(false)}
               />
             </Form>
           </Card.Body>
         ) : (
           <button 
             className="CategoryNew-btn btn" 
-            onClick={() => setFormOpen(true)}>
+            onClick={() => setOpen(true)}>
             <i className="fa far fa-plus" />{' Add new category'}
           </button>
         )}
