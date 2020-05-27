@@ -31,7 +31,8 @@ export interface Board {
   archived: boolean;
 }
 
-export interface BoardComplete extends Omit<Board, 'categories' | 'cards'> {
+export interface BoardComplete {
+  board: Board;
   categories: Category[];
   cards: Card[];
 }
