@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import update from 'immutability-helper'
+// import update from 'immutability-helper';
 import { useDrag, useDrop, DropTargetMonitor, XYCoord } from 'react-dnd';
 
 import Card from 'react-bootstrap/Card';
@@ -151,10 +151,16 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
         bg="light"
         className="CategoryView-card" 
       >
-        <Card.Body>
-          <h6>
+        <div className="CategoryHeader">
+          <span className="CategoryTitle">
             {category?.title}
-          </h6>
+          </span>
+          <button type="button" className="btn btn-sm" data-toggle="dropdown"> 
+            <i className="far fa-ellipsis-h"></i>
+          </button> 
+        </div>
+        <Card.Body>
+          
           <div className="CardList">
             {categoryCards.map((id) => <CardView key={id} cardid={id} />)}
           </div>
