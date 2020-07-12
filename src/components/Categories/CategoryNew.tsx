@@ -15,7 +15,7 @@ function CategoryNew() {
   const { boardid } = useParams();
   const board = useSelector((state: RootState) => state.boards.byId[boardid]);
   const dispatch = useDispatch();
-  
+
   if (typeof board === 'undefined') {
     return null;
   }
@@ -40,9 +40,9 @@ function CategoryNew() {
           <Card.Body>
             <Form onSubmit={handleSubmit}>
               <Form.Group>
-                <Form.Control 
+                <Form.Control
                   autoFocus
-                  type="text" 
+                  type="text"
                   placeholder="Enter category name..."
                   name="title"
                   value={title}
@@ -50,12 +50,12 @@ function CategoryNew() {
                 />
               </Form.Group>
               <Button
-                type="submit" 
+                type="submit"
                 variant="success"
                 children="Save Category"
                 size="sm"
               />
-              <button 
+              <button
                 type="button"
                 className="btn btn-sm"
                 children={<i className="fa far fa-times" />}
@@ -64,8 +64,8 @@ function CategoryNew() {
             </Form>
           </Card.Body>
         ) : (
-          <button 
-            className="CategoryNew-btn btn" 
+          <button
+            className="CategoryNew-btn btn"
             onClick={() => setOpen(true)}>
             <i className="fa far fa-plus" />{' Add new category'}
           </button>

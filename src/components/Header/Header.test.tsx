@@ -4,6 +4,6 @@ import Header from '.';
 
 test('renders brand', () => {
   const headerElement = render(<Header />);
-  const brandElement = headerElement.getByText('React-Starter')
+  const brandElement = headerElement.getByText('React-Starter');
   expect(brandElement).toBeInTheDocument();
 });

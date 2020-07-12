@@ -8,7 +8,7 @@ import './Boards.scss';
 
 function BoardList() {
   const boards = useSelector((state: RootState) => state.boards);
-  
+
   return (
     <div className="BoardList container pt-4">
       <h2>My Boards</h2>
@@ -24,8 +24,8 @@ function BoardList() {
           </Link>
         );
       })}
-      <Link 
-        to="/boards/new" 
+      <Link
+        to="/boards/new"
         className="BoardList-button BoardList-button-new btn btn-secondary"
         children="Create New Board"
       />

@@ -64,7 +64,7 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
           <Card.Body>
             <Form onSubmit={handleSubmit}>
               <Form.Group>
-                <Form.Control 
+                <Form.Control
                   autoFocus
                   as="textarea"
                   rows={3}
@@ -78,12 +78,12 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
                 />
               </Form.Group>
               <Button
-                type="submit" 
+                type="submit"
                 variant="success"
                 children="Save"
                 size="sm"
               />
-              <button 
+              <button
                 type="button"
                 className="btn btn-sm"
                 children={<i className="fa far fa-times" />}
@@ -92,8 +92,8 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
             </Form>
           </Card.Body>
         ) : (
-          <button 
-            className="CardNew-btn btn text-left" 
+          <button
+            className="CardNew-btn btn text-left"
             onClick={handleOpen}>
             <i className="fa far fa-plus" />{' Add a card'}
           </button>

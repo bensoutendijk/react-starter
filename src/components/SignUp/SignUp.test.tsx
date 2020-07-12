@@ -4,5 +4,5 @@ import SignUp from '.';
 
 test('SignUp form fields render', () => {
   const element = render(<SignUp />);
-  expect(element)
+  expect(element);
 });

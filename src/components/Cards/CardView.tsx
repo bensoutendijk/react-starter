@@ -95,7 +95,7 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
         <Card className="CardEdit-card" ref={cardRef}>
           <Form className="CardEdit-card-form" onSubmit={handleSubmit}>
             <Card.Body>
-              <Form.Control 
+              <Form.Control
                 ref={inputRef}
                 autoFocus
                 as="textarea"
@@ -108,24 +108,24 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
               />
             </Card.Body>
             <div className="mt-2">
-              <button 
+              <button
                 type="submit"
-                className="btn btn-success" 
+                className="btn btn-success"
                 children="Save"
               />
             </div>
           </Form>
           <div className="CardEdit-card-quicktools">
-            <button 
-              className="btn btn-dark" 
+            <button
+              className="btn btn-dark"
               children="Edit labels"
             />
-            <button 
-              className="btn btn-dark" 
+            <button
+              className="btn btn-dark"
               children="Copy"
             />
-            <button 
-              className="btn btn-dark" 
+            <button
+              className="btn btn-dark"
               children="Archive"
               onClick={handleDelete}
             />
@@ -140,9 +140,9 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
             {card?.title}
           </div>
           <div>
-            <button 
-              type="button" 
-              className="CardEdit-btn btn btn-sm" 
+            <button
+              type="button"
+              className="CardEdit-btn btn btn-sm"
               onClick={handleOpen}
               children={<i className="fa fal fa-pencil fa-sm" />}
             />

@@ -1,5 +1,5 @@
-import { Category } from "../categories/types";
-import { Card } from "../cards/types";
+import { Category } from '../categories/types';
+import { Card } from '../cards/types';
 
 export type BoardsState = {
   fetched: boolean;

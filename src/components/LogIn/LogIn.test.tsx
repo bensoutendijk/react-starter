@@ -4,5 +4,5 @@ import LogIn from '.';
 
 test('LogIn form fields render', () => {
   const logInElement = render(<LogIn />);
-  expect(logInElement)
+  expect(logInElement);
 });

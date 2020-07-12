@@ -42,24 +42,24 @@ function BoardNew() {
             <div className="col-10">
               <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                  <Form.Control 
+                  <Form.Control
                     autoFocus
-                    type="text" 
+                    type="text"
                     placeholder="Choose a board title..."
                     name="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </Form.Group>
-                <Button 
-                  variant="secondary" 
-                  type="button" 
+                <Button
+                  variant="secondary"
+                  type="button"
                   onClick={handleClose}
                   children="Cancel"
                   className="mr-2"
                 />
-                <Button 
-                  variant="primary" 
+                <Button
+                  variant="primary"
                   type="submit"
                   children="Create board"
                 />

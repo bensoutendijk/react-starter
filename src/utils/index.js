@@ -4,8 +4,8 @@ import groupBy from './groupBy';
 import mapToKey from './mapToKey';
 
 export {
-    debounce,
-    getUniqueValues,
-    groupBy,
-    mapToKey,
+  debounce,
+  getUniqueValues,
+  groupBy,
+  mapToKey,
 };

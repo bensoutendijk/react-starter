@@ -40,8 +40,8 @@ function SignUp() {
         <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
-            <Form.Control 
-              name="email" 
+            <Form.Control
+              name="email"
               type="email"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
@@ -50,7 +50,7 @@ function SignUp() {
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
-            <Form.Control 
+            <Form.Control
               name="password"
               type="password"
               placeholder="Password"
@@ -60,7 +60,7 @@ function SignUp() {
           </Form.Group>
           <Form.Group>
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control 
+            <Form.Control
               name="passwordConfirmation"
               type="password"
               placeholder="Confirm Password"

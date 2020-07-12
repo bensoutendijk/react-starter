@@ -39,7 +39,7 @@ function LogIn() {
         <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
-            <Form.Control 
+            <Form.Control
               type="email"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}

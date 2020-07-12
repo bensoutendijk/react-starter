@@ -22,6 +22,7 @@
           "exports": "always-multiline",
           "functions": "always-multiline"
         }],
+        "no-trailing-spaces": "error",
         "@typescript-eslint/quotes": ["error", "single"],
         "@typescript-eslint/indent": ["error", 2],
         "@typescript-eslint/semi": ["error", "always"],

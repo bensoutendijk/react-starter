@@ -105,8 +105,7 @@ function BoardView() {
         )}
       </Navbar>
       <CategoryList />
-\    </div>
-
+    </div>
   );
 }
 
