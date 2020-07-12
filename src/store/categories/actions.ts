@@ -23,7 +23,7 @@ export const postCategorySuccess = createAction<Category>('POST_CATEGORY_SUCCESS
 export const postCategoryFailed = createAction<CategoriesError>('POST_CATEGORY_FAILED');
 
 export const removeCategoryPending = createAction('REMOVE_CATEGORY_PENDING');
-export const removeCategorySuccess = createAction<string>('REMOVE_CATEGORY_SUCCESS');
+export const removeCategorySuccess = createAction<Category>('REMOVE_CATEGORY_SUCCESS');
 export const removeCategoryFailed = createAction<CategoriesError>('REMOVE_CATEGORY_FAILED');
 
 export const updateCategoryForm = createAction<CategoryForm>('UPDATE_CATEGORY_FORM');
@@ -63,7 +63,8 @@ export const deleteCategory = (
   dispatch(removeCategoryPending());
   try {
     const { data } = await axios.delete(`/api/categories/${categoryid}`);
-    dispatch(removeCategorySuccess(data));
+    dispatch(removeCategorySuccess(data.category));
+    dispatch(postBoardSuccess(data.board));
   } catch (error) {
     const { data } = error.response;
     dispatch(removeCategoryFailed(data));

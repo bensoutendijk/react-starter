@@ -78,7 +78,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Cat
   builder
     .addCase(removeCategorySuccess, (state, action) => {
       state.fetching = false;
-      state.allIds = state.allIds.filter((id) => id !== action.payload);
+      state.allIds = state.allIds.filter((id) => id !== action.payload._id);
     });
   builder
     .addCase(removeCategoryFailed, (state, action) => {
