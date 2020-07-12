@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import clsx from 'clsx';
 // import update from 'immutability-helper';
 import { useDrag, useDrop, DropTargetMonitor, XYCoord } from 'react-dnd';
 
@@ -10,6 +11,7 @@ import { RootState } from '../../store';
 import CardView from '../Cards/CardView';
 import CardNew from '../Cards/CardNew';
 import { updateBoard, updateBoardForm } from '../../store/boards/actions';
+import { deleteCategory } from '../../store/categories/actions';
 
 interface DragItem {
   index: number;
@@ -18,6 +20,7 @@ interface DragItem {
 }
 
 const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }) {
+  const [state, setState] = useState<CategoryViewState>({});
   const boards = useSelector((state: RootState) => state.boards);
   const categories = useSelector((state: RootState) => state.categories);
   const cards = useSelector((state: RootState) => state.cards);
@@ -26,6 +29,30 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
 
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
+
+  // Event Handlers
+  const handleToggleDropdown = function() {
+    setState({
+      ...state,
+      dropdown: !state.dropdown,
+    });
+  };
+
+  const handleDeleteCategory = function() {
+    if (!category) {
+      return;
+    }
+
+    setState({
+      ...state,
+      dropdown: false,
+    });
+
+    dispatch(deleteCategory(category._id));
+  };
+
+  // Dragging Logic
+
   const [, drop] = useDrop({
     accept: 'List',
     drop: (item: DragItem) => {
@@ -56,34 +83,34 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
       if (to === from) {
         return;
       }
-      
+
       // Determine rectangle on screen
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      
+
       // Get vertical middle
       const hoverMiddleX =
       (hoverBoundingRect.left - hoverBoundingRect.right) / 2;
-      
+
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
-      
+
       // Get pixels to the top
       const hoverClientX = (clientOffset as XYCoord).x - hoverBoundingRect.right;
-      
+
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
-      
+
       // Dragging downwards
       if (to < from && hoverClientX < hoverMiddleX) {
         return;
       }
-      
+
       // Dragging upwards
       if (to > from && hoverClientX > hoverMiddleX) {
         return;
       }
-      
+
       // Update board form
       if (typeof category === 'undefined') {
         return;
@@ -137,37 +164,43 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
       item.index = from;
     },
   });
+
   const [{ isDragging }, drag] = useDrag({
     item: { type: 'List', index },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
-  
+
   drag(drop(ref));
+
   return (
     <div className="CategoryView" ref={ref}>
       <Card
         bg="light"
-        className="CategoryView-card" 
+        className="CategoryView-card"
       >
         <div className="CategoryHeader">
           <span className="CategoryTitle">
             {category?.title}
           </span>
-          <button type="button" className="btn btn-sm" data-toggle="dropdown"> 
-            <i className="far fa-ellipsis-h"></i>
-          </button> 
+          <div className="dropdown">
+            <button id={`delete-category-${category?._id}`} className="btn" onClick={handleToggleDropdown}>
+              <i className="far fa-ellipsis-h"></i>
+            </button>
+            <div className={clsx('dropdown-menu', { show: state.dropdown })}>
+              <button className="dropdown-item" onClick={handleDeleteCategory}>Delete</button>
+            </div>
+          </div>
         </div>
         <Card.Body>
-          
           <div className="CardList">
             {categoryCards.map((id) => <CardView key={id} cardid={id} />)}
           </div>
           <CardNew categoryid={categoryid} />
         </Card.Body>
       </Card>
-      
+
     </div>
   );
 };
@@ -177,4 +210,8 @@ export default CategoryView;
 export interface CategoryViewProps {
   categoryid: string;
   index: number;
+}
+
+export interface CategoryViewState {
+  dropdown?: boolean;
 }
